@@ -720,6 +720,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3273404371623642312, guid: 63d5814e60c9fd845b940ecfdab13ef0,
         type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273404371623642312, guid: 63d5814e60c9fd845b940ecfdab13ef0,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -758,16 +763,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basketball
       objectReference: {fileID: 0}
-    - target: {fileID: 7339562345796510001, guid: 63d5814e60c9fd845b940ecfdab13ef0,
-        type: 3}
-      propertyPath: text
-      value: 
-      objectReference: {fileID: 1047615550}
-    - target: {fileID: 7339562345796510001, guid: 63d5814e60c9fd845b940ecfdab13ef0,
-        type: 3}
-      propertyPath: text2
-      value: 
-      objectReference: {fileID: 1858079961}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d5814e60c9fd845b940ecfdab13ef0, type: 3}
 --- !u!1001 &8864298908075985364

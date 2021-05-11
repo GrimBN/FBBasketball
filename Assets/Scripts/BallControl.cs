@@ -2,17 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Animator))]
 public class BallControl : MonoBehaviour
 {
     Rigidbody2D ballRigidbody2D;
     CircleCollider2D ballCollider2D;
+    Animator ballAnimator;
     Touch touch;
-    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f;
-    //[SerializeField] Text text,text2;
+    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, testingHorizontalForce = 5f;    
 
     Vector2 initialTouchPos = Vector2.negativeInfinity, newTouchPos = Vector2.negativeInfinity;
 
@@ -20,13 +20,14 @@ public class BallControl : MonoBehaviour
     {
         Input.simulateMouseWithTouches = false;
         ballRigidbody2D = GetComponent<Rigidbody2D>();
-        ballCollider2D = GetComponent<CircleCollider2D>();        
+        ballCollider2D = GetComponent<CircleCollider2D>();
+        ballAnimator = GetComponent<Animator>();
     }
 
-    /*private void OnMouseDown()
+    private void OnMouseDown()
     {        
-        LaunchBall();
-    }*/
+        LaunchBall(testingHorizontalForce);
+    }
 
     void Update()
     {
@@ -39,38 +40,41 @@ public class BallControl : MonoBehaviour
         {            
             touch = Input.GetTouch(0);
             if(touch.phase == TouchPhase.Began)// && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
-            {
-                //text.text = "started";
+            {                
                 initialTouchPos = touch.position;
-                newTouchPos = initialTouchPos;
-                //ChangeBallPos(newTouchPos);
+                newTouchPos = initialTouchPos;                
             }
 
             if(touch.phase == TouchPhase.Moved)// && ballCollider2D.OverlapPoint(initialTouchPos))
-            {
-                //text.text = "Moving";
-                newTouchPos = touch.position;
-                //ChangeBallPos(newTouchPos);
+            {                
+                newTouchPos = touch.position;                
             }  
             
             if(touch.phase == TouchPhase.Ended)// && ballCollider2D.OverlapPoint(initialTouchPos))
             {                
                 newTouchPos = touch.position;
-                float fingerSpeed = touch.deltaPosition.magnitude / touch.deltaTime;
-                //text.text = fingerSpeed.ToString();
-                //text2.text = (newTouchPos.y - initialTouchPos.y).ToString();
-                if (fingerSpeed > minFingerSpeed && Mathf.Abs(newTouchPos.y - initialTouchPos.y) > minYMoveDistance)
+                float fingerSpeed = touch.deltaPosition.magnitude / touch.deltaTime;                
+                if (fingerSpeed > minFingerSpeed && (Camera.main.ScreenToWorldPoint(newTouchPos).y - Camera.main.ScreenToWorldPoint(initialTouchPos).y) > minYMoveDistance)
                 {
-                    LaunchBall();
+                    float horizontalForce = Camera.main.ScreenToWorldPoint(newTouchPos).x - Camera.main.ScreenToWorldPoint(initialTouchPos).x;
+                    LaunchBall(2*horizontalForce);
                 }
             }
         }
     }
 
-    private void LaunchBall()
+    private void LaunchBall(float horizontalForce)
     {
+        ballAnimator.SetTrigger("Launch");
         ballRigidbody2D.constraints = RigidbodyConstraints2D.None;
-        ballRigidbody2D.AddForce(new Vector2(0f, verticalForce),ForceMode2D.Impulse);
+        ballRigidbody2D.AddForce(new Vector2(horizontalForce, verticalForce),ForceMode2D.Impulse);
+        ballRigidbody2D.AddTorque(-horizontalForce * torqueMultiplier, ForceMode2D.Impulse);
+        
+    }
+
+    public void SetBallColliderEnabled(bool value)
+    {
+        ballCollider2D.enabled = value;
     }
 
     private void ChangeBallPos(Vector2 screenPos)

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3273404371623642318}
   - component: {fileID: 3273404371623642319}
   - component: {fileID: 7339562345796510001}
+  - component: {fileID: 1018392367}
   m_Layer: 0
   m_Name: Basketball
   m_TagString: Untagged
@@ -133,6 +134,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a118a487215f14c9df57573236fe7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minFingerSpeed: 0.2
-  minYMoveDistance: 0.2
-  verticalForce: 20
+  minFingerSpeed: 75
+  minYMoveDistance: 0.3
+  verticalForce: 32
+  torqueMultiplier: 0.3
+  testingHorizontalForce: 2
+--- !u!95 &1018392367
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3273404371623642314}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a59c336e3fe0bbf438b477510d07388f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
