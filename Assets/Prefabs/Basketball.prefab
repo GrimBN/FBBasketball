@@ -133,6 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a118a487215f14c9df57573236fe7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minFingerSpeed: 1
+  minFingerSpeed: 0.2
   minYMoveDistance: 0.2
   verticalForce: 20

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
@@ -11,6 +12,9 @@ public class BallControl : MonoBehaviour
     CircleCollider2D ballCollider2D;
     Touch touch;
     [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f;
+    //[SerializeField] Text text,text2;
+
+    Vector2 initialTouchPos = Vector2.negativeInfinity, newTouchPos = Vector2.negativeInfinity;
 
     void Start()
     {
@@ -19,41 +23,43 @@ public class BallControl : MonoBehaviour
         ballCollider2D = GetComponent<CircleCollider2D>();        
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {        
         LaunchBall();
-    }
+    }*/
 
     void Update()
     {
-        ProcessTouchInput();
+        ProcessTouchInput();        
     }
 
     private void ProcessTouchInput()
-    {
-        Vector2 initialTouchPos, newTouchPos;
-
-        if(Input.touchCount > 0 && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position)))
-        {
+    {        
+        if(Input.touchCount > 0)
+        {            
             touch = Input.GetTouch(0);
-            if(touch.phase == TouchPhase.Began)
+            if(touch.phase == TouchPhase.Began)// && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
             {
+                //text.text = "started";
                 initialTouchPos = touch.position;
                 newTouchPos = initialTouchPos;
                 //ChangeBallPos(newTouchPos);
             }
 
-            if(touch.phase == TouchPhase.Moved)
+            if(touch.phase == TouchPhase.Moved)// && ballCollider2D.OverlapPoint(initialTouchPos))
             {
+                //text.text = "Moving";
                 newTouchPos = touch.position;
                 //ChangeBallPos(newTouchPos);
             }  
             
-            if(touch.phase == TouchPhase.Ended)
-            {
+            if(touch.phase == TouchPhase.Ended)// && ballCollider2D.OverlapPoint(initialTouchPos))
+            {                
                 newTouchPos = touch.position;
                 float fingerSpeed = touch.deltaPosition.magnitude / touch.deltaTime;
-                if(fingerSpeed > minFingerSpeed && touch.deltaPosition.y > minYMoveDistance)
+                //text.text = fingerSpeed.ToString();
+                //text2.text = (newTouchPos.y - initialTouchPos.y).ToString();
+                if (fingerSpeed > minFingerSpeed && Mathf.Abs(newTouchPos.y - initialTouchPos.y) > minYMoveDistance)
                 {
                     LaunchBall();
                 }
