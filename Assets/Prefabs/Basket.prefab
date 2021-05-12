@@ -217,6 +217,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2153978741244410924}
+  - component: {fileID: 3641958137598720858}
+  - component: {fileID: 7418273213037882147}
+  - component: {fileID: 797954099844857004}
   m_Layer: 0
   m_Name: Basket
   m_TagString: Untagged
@@ -241,6 +244,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3641958137598720858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153978741244410927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387ed461e8063354c85edbf6971d20a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  highScoreText: {fileID: 0}
+--- !u!114 &7418273213037882147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153978741244410927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea265c68721aa44897309993a64bbca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeInterval: 0.1
+  baseDistancePerInterval: 0.01
+  dPIIncrease: 0.005
+  maxPos: 2
+  startBasketMovementScore: 10
+  basketSpeedupScoreInterval: 10
+--- !u!61 &797954099844857004
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153978741244410927}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00000035762787, y: -1.24}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.4, y: 4.8}
+    newSize: {x: 6.4, y: 4.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.29, y: 0.099763155}
+  m_EdgeRadius: 0
 --- !u!1 &2153978741352191762
 GameObject:
   m_ObjectHideFlags: 0

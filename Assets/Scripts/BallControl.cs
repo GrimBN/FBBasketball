@@ -8,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class BallControl : MonoBehaviour
 {
+    //TODO: add score stuff and UI stuff
+
     Rigidbody2D ballRigidbody2D;
     CircleCollider2D ballCollider2D;
     Animator ballAnimator;
@@ -15,6 +17,7 @@ public class BallControl : MonoBehaviour
     [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, testingHorizontalForce = 5f;    
 
     Vector2 initialTouchPos = Vector2.negativeInfinity, newTouchPos = Vector2.negativeInfinity;
+    bool hasScored = false;
 
     void Start()
     {
@@ -75,6 +78,16 @@ public class BallControl : MonoBehaviour
     public void SetBallColliderEnabled(bool value)
     {
         ballCollider2D.enabled = value;
+    }
+
+    public void SetHasScoredTrue()
+    {
+        hasScored = true;
+    }
+
+    public bool GetHasScored()
+    {
+        return hasScored;
     }
 
     private void ChangeBallPos(Vector2 screenPos)

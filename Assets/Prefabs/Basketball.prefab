@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minFingerSpeed: 75
   minYMoveDistance: 0.3
-  verticalForce: 32
+  verticalForce: 33
   torqueMultiplier: 0.3
   testingHorizontalForce: 2
 --- !u!95 &1018392367
