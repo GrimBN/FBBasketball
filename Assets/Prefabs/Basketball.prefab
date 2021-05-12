@@ -89,6 +89,8 @@ MonoBehaviour:
   verticalForce: 33
   torqueMultiplier: 0.3
   testingHorizontalForce: 2
+  collisionSFX: {fileID: 8300000, guid: 1ec7bc99b094e334ead35f9f63d0732e, type: 3}
+  volume: 0.3
 --- !u!95 &1018392367
 Animator:
   serializedVersion: 3

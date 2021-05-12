@@ -14,7 +14,9 @@ public class BallControl : MonoBehaviour
     CircleCollider2D ballCollider2D;
     Animator ballAnimator;
     Touch touch;
-    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, testingHorizontalForce = 5f;    
+    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, testingHorizontalForce = 5f;
+    [SerializeField] AudioClip collisionSFX;
+    [Range(0,1)][SerializeField] float volume = 0.4f;
 
     Vector2 initialTouchPos = Vector2.negativeInfinity, newTouchPos = Vector2.negativeInfinity;
     bool hasScored = false;
@@ -30,6 +32,11 @@ public class BallControl : MonoBehaviour
     private void OnMouseDown()
     {        
         LaunchBall(testingHorizontalForce);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        AudioSource.PlayClipAtPoint(collisionSFX, Camera.main.transform.position, volume);
     }
 
     void Update()

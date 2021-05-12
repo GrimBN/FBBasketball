@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class BasketTracker : MonoBehaviour
 {
     [SerializeField] Text scoreText;
-    [SerializeField] Text highScoreText;    
+    [SerializeField] Text highScoreText;
+    [SerializeField] AudioClip scoreSFX, resetScoreSFX;
     BasketMovement basketMovement;
+    AudioSource audioSource;
     //BoxCollider2D basketTriggerCollider;
 
     int score = 0;
@@ -17,6 +19,7 @@ public class BasketTracker : MonoBehaviour
     {
         //basketTriggerCollider = GetComponentInChildren<BoxCollider2D>(true);
         basketMovement = GetComponent<BasketMovement>();
+        audioSource = GetComponent<AudioSource>();
         UpdateScoreText();
     }
 
@@ -51,9 +54,10 @@ public class BasketTracker : MonoBehaviour
     {
         score++;        
         UpdateScoreText();
+        audioSource.PlayOneShot(scoreSFX, 0.3f);
         if(score == basketMovement.GetMovementStartScore())
         {
-            StartCoroutine(basketMovement.MoveBasket());
+            basketMovement.MoveBasket();
         }
         else if(score >= basketMovement.GetMovementStartScore() && score % basketMovement.GetSpeedupScoreInterval() == 0)
         {
@@ -65,6 +69,8 @@ public class BasketTracker : MonoBehaviour
     {
         score = 0;
         UpdateScoreText();
+        audioSource.PlayOneShot(resetScoreSFX);
+        basketMovement.ResetBasket();
     }
 
     public int GetScore()
