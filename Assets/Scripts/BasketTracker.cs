@@ -9,17 +9,21 @@ public class BasketTracker : MonoBehaviour
     [SerializeField] Text highScoreText;
     [SerializeField] AudioClip scoreSFX, resetScoreSFX;
     BasketMovement basketMovement;
+    HighScoreLoader highScoreLoader;
     AudioSource audioSource;
     //BoxCollider2D basketTriggerCollider;
 
     int score = 0;
-    int highScore = -1;
+    int highScore = 0;
 
     void Start()
     {
         //basketTriggerCollider = GetComponentInChildren<BoxCollider2D>(true);
-        basketMovement = GetComponent<BasketMovement>();
+        basketMovement = GetComponent<BasketMovement>();        
         audioSource = GetComponent<AudioSource>();
+        highScoreLoader = FindObjectOfType<HighScoreLoader>();
+        highScore = highScoreLoader.GetHighScore();
+        highScoreText.text = "High Score : " + highScore.ToString();
         UpdateScoreText();
     }
 
@@ -30,9 +34,8 @@ public class BasketTracker : MonoBehaviour
             scoreText.text = score.ToString();
         }
 
-        if (score > highScore && highScoreText)
-        {
-            highScore = score;
+        if (score >= highScore && highScoreText)
+        {            
             highScoreText.text = "High Score : " + highScore.ToString();
         }
     }
@@ -52,10 +55,16 @@ public class BasketTracker : MonoBehaviour
 
     public void IncreaseScore()
     {
-        score++;        
-        UpdateScoreText();
+        score++;                
         audioSource.PlayOneShot(scoreSFX, 0.3f);
-        if(score == basketMovement.GetMovementStartScore())
+        if (score > highScore)
+        {
+            highScore = score;
+            highScoreLoader.UpdateHighScore(highScore);
+        }
+        UpdateScoreText();
+
+        if (score == basketMovement.GetMovementStartScore())
         {
             basketMovement.MoveBasket();
         }
@@ -71,6 +80,7 @@ public class BasketTracker : MonoBehaviour
         UpdateScoreText();
         audioSource.PlayOneShot(resetScoreSFX);
         basketMovement.ResetBasket();
+        highScoreLoader.SaveScore();
     }
 
     public int GetScore()

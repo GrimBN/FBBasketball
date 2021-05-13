@@ -9,6 +9,20 @@ public class BallSpawner : MonoBehaviour
     [SerializeField] GameObject ballPrefab;
     BasketTracker basketTracker;
 
+    private void OnEnable()
+    {
+        Instantiate(ballPrefab, new Vector3(0, -4f, 0f), Quaternion.identity);
+    }
+
+    private void OnDisable()
+    {
+        BallControl ball = FindObjectOfType<BallControl>();
+        if (ball)
+        {
+            Destroy(ball.gameObject);
+        }
+    }
+
     void Start()
     {
         ballDespawnCollider = GetComponent<BoxCollider2D>();
