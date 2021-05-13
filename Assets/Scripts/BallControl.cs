@@ -7,12 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Animator))]
 public class BallControl : MonoBehaviour
-{    
+{        
     Rigidbody2D ballRigidbody2D;
     CircleCollider2D ballCollider2D;
     Animator ballAnimator;
     Touch touch;
-    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, testingHorizontalForce = 5f;
+    [SerializeField] float minFingerSpeed = 0.1f, minYMoveDistance = 0.2f, verticalForce = 5f, torqueMultiplier = 0.5f, horizontalForceMultiplier = 1.5f;                           
     [SerializeField] AudioClip collisionSFX;
     [Range(0,1)][SerializeField] float volume = 0.4f;
 
@@ -27,10 +27,10 @@ public class BallControl : MonoBehaviour
         ballAnimator = GetComponent<Animator>();
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {        
         LaunchBall(testingHorizontalForce);
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -44,7 +44,7 @@ public class BallControl : MonoBehaviour
 
     private void ProcessTouchInput()
     {        
-        if(Input.touchCount > 0)
+        if(Input.touchCount > 0 && !ballAnimator.GetBool("Launched"))
         {            
             touch = Input.GetTouch(0);
             if(touch.phase == TouchPhase.Began)// && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
@@ -52,11 +52,6 @@ public class BallControl : MonoBehaviour
                 initialTouchPos = touch.position;
                 newTouchPos = initialTouchPos;                
             }
-
-            if(touch.phase == TouchPhase.Moved)// && ballCollider2D.OverlapPoint(initialTouchPos))
-            {                
-                newTouchPos = touch.position;                
-            }  
             
             if(touch.phase == TouchPhase.Ended)// && ballCollider2D.OverlapPoint(initialTouchPos))
             {                
@@ -64,8 +59,10 @@ public class BallControl : MonoBehaviour
                 float fingerSpeed = touch.deltaPosition.magnitude / touch.deltaTime;                
                 if (fingerSpeed > minFingerSpeed && (Camera.main.ScreenToWorldPoint(newTouchPos).y - Camera.main.ScreenToWorldPoint(initialTouchPos).y) > minYMoveDistance)
                 {
-                    float horizontalForce = Camera.main.ScreenToWorldPoint(newTouchPos).x - Camera.main.ScreenToWorldPoint(initialTouchPos).x;
-                    LaunchBall(2*horizontalForce);
+                    float xDifference = Camera.main.ScreenToWorldPoint(newTouchPos).x - Camera.main.ScreenToWorldPoint(initialTouchPos).x;
+                    float horizontalForce = xDifference;
+
+                    LaunchBall(horizontalForce * horizontalForceMultiplier);
                 }
             }
         }
@@ -73,7 +70,7 @@ public class BallControl : MonoBehaviour
 
     private void LaunchBall(float horizontalForce)
     {
-        ballAnimator.SetTrigger("Launch");
+        ballAnimator.SetBool("Launched", true);
         ballRigidbody2D.constraints = RigidbodyConstraints2D.None;
         ballRigidbody2D.AddForce(new Vector2(horizontalForce, verticalForce),ForceMode2D.Impulse);
         ballRigidbody2D.AddTorque(-horizontalForce * torqueMultiplier, ForceMode2D.Impulse);
