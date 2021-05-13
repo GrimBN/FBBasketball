@@ -46,14 +46,15 @@ public class BallControl : MonoBehaviour
     {        
         if(Input.touchCount > 0 && !ballAnimator.GetBool("Launched"))
         {            
-            touch = Input.GetTouch(0);
-            if(touch.phase == TouchPhase.Began)// && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
+            touch = Input.GetTouch(0);            
+
+            if(touch.phase == TouchPhase.Began && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
             {                
                 initialTouchPos = touch.position;
                 newTouchPos = initialTouchPos;                
             }
             
-            if(touch.phase == TouchPhase.Ended)// && ballCollider2D.OverlapPoint(initialTouchPos))
+            else if(touch.phase == TouchPhase.Ended && ballCollider2D.OverlapPoint(Camera.main.ScreenToWorldPoint(initialTouchPos)))
             {                
                 newTouchPos = touch.position;
                 float fingerSpeed = touch.deltaPosition.magnitude / touch.deltaTime;                
