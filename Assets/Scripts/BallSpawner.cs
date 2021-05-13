@@ -39,6 +39,7 @@ public class BallSpawner : MonoBehaviour
             if (!ball.GetHasScored())
             {
                 basketTracker.ResetScore();
+                basketTracker.PlayResetSFX();
             }
         }
     }

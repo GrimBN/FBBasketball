@@ -11,16 +11,17 @@ public class BasketTracker : MonoBehaviour
     BasketMovement basketMovement;
     HighScoreLoader highScoreLoader;
     AudioSource audioSource;
-    //BoxCollider2D basketTriggerCollider;
+    [SerializeField] Animator scoreAnimatorController;    
 
     int score = 0;
+    int currentBest = 0;
     int highScore = 0;
 
     void Start()
-    {
-        //basketTriggerCollider = GetComponentInChildren<BoxCollider2D>(true);
+    {        
         basketMovement = GetComponent<BasketMovement>();        
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();        
+
         highScoreLoader = FindObjectOfType<HighScoreLoader>();
         highScore = highScoreLoader.GetHighScore();
         highScoreText.text = "High Score : " + highScore.ToString();
@@ -31,7 +32,7 @@ public class BasketTracker : MonoBehaviour
     {
         if (scoreText)
         {
-            scoreText.text = score.ToString();
+            scoreText.text = score.ToString();            
         }
 
         if (score >= highScore && highScoreText)
@@ -62,6 +63,17 @@ public class BasketTracker : MonoBehaviour
             highScore = score;
             highScoreLoader.UpdateHighScore(highScore);
         }
+
+        if(score > currentBest)
+        {
+            currentBest = score;
+        }
+
+        if (scoreAnimatorController.GetBool("showCurrentBest"))
+        {
+            scoreAnimatorController.SetBool("showCurrentBest", false);
+        }
+
         UpdateScoreText();
 
         if (score == basketMovement.GetMovementStartScore())
@@ -76,11 +88,24 @@ public class BasketTracker : MonoBehaviour
 
     public void ResetScore()
     {
-        score = 0;
-        UpdateScoreText();
-        audioSource.PlayOneShot(resetScoreSFX);
+        if (currentBest <= score)
+        {
+            scoreAnimatorController.SetBool("showCurrentBest", true);
+            score = 0;
+        }
+        else
+        {
+            scoreAnimatorController.SetBool("showCurrentBest", false);
+            score = 0;
+            UpdateScoreText();
+        }              
         basketMovement.ResetBasket();
         highScoreLoader.SaveScore();
+    }
+
+    public void PlayResetSFX()
+    {
+        audioSource.PlayOneShot(resetScoreSFX);
     }
 
     public int GetScore()

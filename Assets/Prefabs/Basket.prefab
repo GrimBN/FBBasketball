@@ -261,6 +261,7 @@ MonoBehaviour:
   highScoreText: {fileID: 0}
   scoreSFX: {fileID: 8300000, guid: 0bf9f19eb3585824b9b7a005c67b0f64, type: 3}
   resetScoreSFX: {fileID: 8300000, guid: 085456849647e7644ba5fc2d711e8227, type: 3}
+  scoreAnimatorController: {fileID: 0}
 --- !u!114 &7418273213037882147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +293,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000035762787, y: -1.24}
+  m_Offset: {x: 0, y: -1.24}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -303,7 +304,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.29, y: 0.099763155}
+  m_Size: {x: 0.8353315, y: 0.099763155}
   m_EdgeRadius: 0
 --- !u!82 &1436338037
 AudioSource:
@@ -317,7 +318,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

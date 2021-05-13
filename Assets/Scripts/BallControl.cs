@@ -7,9 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Animator))]
 public class BallControl : MonoBehaviour
-{
-    //TODO: add score stuff and UI stuff
-
+{    
     Rigidbody2D ballRigidbody2D;
     CircleCollider2D ballCollider2D;
     Animator ballAnimator;
